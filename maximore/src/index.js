@@ -94,18 +94,22 @@ class ProductManager{
 
     }
     
-    const producto01=new ProductManager("./productos.json")    
-    producto01.addProduct("Zapatillas", "zapatillas para corredores",100, "imagen",200, "ABC123")
+    //const producto01=new ProductManager("./productos.json")    
+    //producto01.addProduct("Zapatillas", "zapatillas para corredores",100, "imagen",200, "ABC123")
     
-    producto01.addProduct("Ventilador", "Ventilador de tipo industrial",300, "imagen",120, "ABC123")
+    //producto01.addProduct("Ventilador", "Ventilador de tipo industrial",300, "imagen",120, "ABC223")
+    //producto01.addProduct("Heladera", "Heladera de tipo industrial",3000, "imagen",120, "ABC323")
+    //producto01.addProduct("Sillom", "Sillon de cuero importado",1000, "imagen",120, "ABC423")
+    //producto01.addProduct("Zapatillas", "zapatillas para corredores",100, "imagen",200, "ABC125")
+    //producto01.addProduct("Mesa", "Mesa rectangular de roble",300, "imagen",120, "ABC623")
+    //producto01.addProduct("Televisor", "Televisor de tamaño meadiano",400, "imagen",120, "ABC823")
+    //console.log(producto01.getProducts())
     
-    producto01.addProduct("Zapatillas", "zapatillas para corredores",100, "imagen",200, "ABC125")
-        
-    console.log(producto01.getProducts())
-    
-    console.log(producto01.getId(1));
-    console.log(producto01.getId(55));
+    //console.log(producto01.getId(1));
+    //console.log(producto01.getId(55));
     //producto01.deleteProduct(2);
-    producto01.updateProduct(2,{price:500})
+    //producto01.updateProduct(2,{price:500})
+
+    module.exports=ProductManager
 
 
