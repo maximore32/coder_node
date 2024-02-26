@@ -1,35 +1,39 @@
 const fs=require("fs")
 const path=require("path")
+const { getDatos, saveDatos } = require("../varios")
 
 
 class ProductManager{
 
-    constructor(rutaArchivo){
-    this.path=rutaArchivo
-    this.products=[]
+    constructor(ruta){
+    //this.path=rutaArchivo
+    //this.products=[]
+    this.ruta=ruta
     
     }
         
     getProducts(){
-        let lecturaArchivo=fs.readFileSync(this.path, {encoding:"utf-8"})
-        return JSON.parse(lecturaArchivo);       
+        //let lecturaArchivo=fs.readFileSync(this.path, {encoding:"utf-8"})
+        //return JSON.parse(lecturaArchivo); 
+        return getDatos(this.ruta)     
     
     }
     
     addProduct(title, description,price, thumbnail,stock,code){
     
-    if(!title || !description || !price || !thumbnail||!stock || !code){    
-    console.log("Debe completar todos los campos!")    
-    return    
-    }
+    //if(!title || !description || !price || !thumbnail||!stock || !code){    
+    //console.log("Debe completar todos los campos!!!!")    
+    //return    
+    //}
 
+    let prods=this.getProducts()
 
     let id=1
-    if(this.products.length>0){    
-    id=this.products[this.products.length-1].id +1    
+    if(prods.length>0){    
+    id=prods[prods.length-1].id +1    
     }
     
-    let existe=this.products.find(codigo=>codigo.code===code)
+    let existe=prod.find(codigo=>codigo.code===code)
     
     if(existe){    
     console.log(`El producto con el codigo ${code} ya esta registrado`)    
@@ -41,9 +45,13 @@ class ProductManager{
     id, code, title, description, price, thumbnail,stock    
     }
     
-    this.products.push(nuevoproduct)
+    prods.push(nuevoproduct)
 
-    fs.writeFileSync(this.path, JSON.stringify(this.products,null,2, {encoding:"utf8"}))
+    saveDatos(this.ruta, prods)
+
+    //fs.writeFileSync(this.path, JSON.stringify(this.products,null,2, {encoding:"utf8"}))
+
+    return nuevoproduct
     
     }
 
@@ -91,7 +99,7 @@ class ProductManager{
             }
 
 
-    }
+    }  
     
     //const producto01=new ProductManager("./productos.json")    
     //producto01.addProduct("Zapatillas", "zapatillas para corredores",100, "imagen",200, "ABC123")

@@ -1,7 +1,10 @@
 const Router =require("express").Router
-const ProductManager=require("../managers/index.")
+const ProductManager=require("../managers/index.js")
+const {saveDatos } = require("../varios")
+
 
 const {join}=require("path")
+
 
 
 const router=Router()
@@ -48,10 +51,67 @@ router.get("/:id", ( req, res)=>{
 })
 
 router.post("/", (req, res)=>{
+    let {title,description,price,thumbnail,stock,code} = req.body
 
-    res.status(201).json({
-        users:"usuario post OK...!!!"
-    })
+    if(!title || !description || !thumbnail || !price ||!stock || !code){
+        res.setHeader('Content-Type','application/json');
+        return res.status(400).json({error:`Debe completar todos los campos`})
+    }    
+
+    let nuevoproducto=pm.addProduct(req.body)
+
+    res.setHeader('Content-Type','application/json')
+    res.status(201).json({nuevoproducto})
+    console.log(nuevoproducto)
+})
+
+
+router.put("/:id", (req, res)=>{
+
+    let id=Number(req.params.id) 
+    if(isNaN(id)){
+        return res.status(400).json({error:"id debe ser numérico"})
+    }
+
+    let prods= pm.getProducts()
+    let indicepProds=prods.findIndex(p=>p.id===id)
+    if(indicepProds===-1){
+        return res.status(400).json({error:`No existen usuarios con id ${id}`})
+    }
+
+    prods[indicepProds]={
+        ...prods[indicepProds],
+        ...req.body,
+        id
+    }   
+
+    saveDatos(prods)
+
+    res.setHeader('Content-Type','application/json');
+    return res.status(200).json({productoModificado:prods[indicepProds]});
+})
+
+router.delete("/:id", (req, res)=>{
+
+    let id=Number(req.params.id) 
+    if(isNaN(id)){
+        return res.status(400).json({error:"id debe ser numérico"})
+    }
+
+    let prods= pm.getProducts()
+    let indicePrd=prods.findIndex(u=>u.id===id)
+    if(indicePrd===-1){
+        return res.status(400).json({error:`No existen usuarios con id ${id}`})
+    }
+
+    let productoEliminado=prods[indicePrd]
+    prods.splice(indicePrd, 1)
+
+    saveDatos(prods)
+
+    res.setHeader('Content-Type','application/json');
+    return res.status(200).json({productoEliminado});
+
 })
 
 module.exports=router
