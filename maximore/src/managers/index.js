@@ -9,8 +9,7 @@ class ProductManager{
     this.products=[]
     
     }
-    
-    
+        
     getProducts(){
         let lecturaArchivo=fs.readFileSync(this.path, {encoding:"utf-8"})
         return JSON.parse(lecturaArchivo);       
